@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine</title>
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #f9c6da, #f3a6c9);
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.card {
+  width: 650px;
+  height: 380px;
+  background: white;
+  border-radius: 25px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  padding: 20px;
+  transition: 0.5s ease;
+}
+
+.glow { box-shadow: 0 0 40px rgba(255, 77, 109, 0.8); }
+
+/* Cat with little heart */
+.cat {
+  width: 95px;
+  height: 95px;
+  background: #f4b183;
+  border-radius: 50%;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.cat:before,
+.cat:after {
+  content: "";
+  position: absolute;
+  top: -25px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 35px solid #f4b183;
+}
+
+.cat:before { left: 5px; }
+.cat:after { right: 5px; }
+
+.eye {
+  width: 10px;
+  height: 10px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 38px;
+}
+
+.eye.left { left: 28px; }
+.eye.right { right: 28px; }
+
+.nose {
+  width: 8px;
+  height: 8px;
+  background: #ff7aa2;
+  border-radius: 50%;
+  position: absolute;
+  top: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.heart {
+  width: 22px;
+  height: 22px;
+  background: #ff4d6d; /* little heart next to cat’s ear */
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  transform: rotate(45deg);
+}
+
+.heart:before,
+.heart:after {
+  content: "";
+  width: 22px;
+  height: 22px;
+  background: #ff4d6d;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.heart:before { top: -11px; left: 0; }
+.heart:after { left: -11px; top: 0; }
+
+h1 { font-size: 28px; }
+
+.buttons { display: flex; gap: 20px; }
+
+button {
+  padding: 12px 28px;
+  border-radius: 25px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background: #ff4d6d;
+  color: white;
+  animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+#noBtn {
+  background: #eee;
+  position: absolute;
+}
+
+.pop-text {
+  font-size: 28px;
+  color: #ff4d6d;
+  animation: pop 0.8s ease forwards;
+}
+
+@keyframes pop {
+  0% { transform: scale(0); opacity:0; }
+  100% { transform: scale(1); opacity:1; }
+}
+
+/* Floating hearts */
+.heart-float {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: #ff4d6d;
+  transform: rotate(45deg);
+  animation: floatUp 2s linear forwards;
+}
+
+.heart-float:before,
+.heart-float:after {
+  content:'';
+  position:absolute;
+  width:12px;
+  height:12px;
+  background:#ff4d6d;
+  border-radius:50%;
+}
+
+.heart-float:before { top:-6px; left:0; }
+.heart-float:after { left:-6px; top:0; }
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(45deg); opacity:1; }
+  100% { transform: translateY(-150px) rotate(45deg); opacity:0; }
+}
+
+/* Sparkles */
+.sparkle {
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:gold;
+  border-radius:50%;
+  animation:sparkleAnim 0.8s forwards;
+}
+
+@keyframes sparkleAnim {
+  0% { opacity:1; transform:scale(1); }
+  100% { opacity:0; transform:translateY(-40px) scale(0); }
+}
+
+/* Floating Message Box - Bottom Center */
+.message-box {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  max-width: 90%;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  border-radius: 15px;
+  font-size: 16px;
+  color: #333;
+  z-index: 1000;
+}
+
+/* Close button for message box */
+.message-box button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Text container inside message box */
+.message-box div {
+  padding-bottom: 40px; /* leave space for close button */
+  white-space: pre-wrap; /* preserve line breaks from typewriter text */
+}
+
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+
+  <div class="cat">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="nose"></div>
+    <div class="heart"></div>
+  </div>
+
+  <h1>JEET, will you be my valentine?</h1>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+  </div>
+
+</div>
+
+<script>
+const card = document.getElementById("card");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+
+// No button runaway
+document.addEventListener("mousemove", (e) => {
+  const rect = noBtn.getBoundingClientRect();
+  const dx = e.clientX - (rect.left + rect.width/2);
+  const dy = e.clientY - (rect.top + rect.height/2);
+  const distance = Math.hypot(dx, dy);
+
+  if(distance < 120){
+    noBtn.style.left = Math.random() * 500 + "px";
+    noBtn.style.top = Math.random() * 200 + "px";
+  }
+});
+
+// Typewriter function
+function typeWriter(text, element, speed=40){
+  let i=0;
+  function typing(){
+    if(i<text.length){
+      element.innerHTML+=text.charAt(i);
+      i++;
+      setTimeout(typing,speed);
+    }
+  }
+  typing();
+}
+
+// Floating hearts
+function floatingHearts(){
+  const heart=document.createElement("div");
+  heart.className="heart-float";
+  heart.style.left=Math.random()*window.innerWidth+"px";
+  heart.style.top=window.innerHeight+"px";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),2000);
+}
+
+// YES BUTTON
+yesBtn.addEventListener("click", ()=>{
+  const audio=new Audio("O_Maahi.mp3");
+  audio.play();
+
+  card.classList.add("glow");
+
+  for(let i=0;i<15;i++){
+    const sparkle=document.createElement("div");
+    sparkle.className="sparkle";
+    sparkle.style.left=(yesBtn.offsetLeft+40)+"px";
+    sparkle.style.top=(yesBtn.offsetTop+20)+"px";
+    card.appendChild(sparkle);
+    setTimeout(()=>sparkle.remove(),800);
+  }
+
+  card.innerHTML=`<h1 class="pop-text">Yaaay JEET, you are officially my valentine! ❤️</h1>`;
+
+  // Surprise button in peach
+  const surpriseBtn = document.createElement("button");
+  surpriseBtn.textContent = "Tap me to make your heart smile a little more ✨ ✨";
+  surpriseBtn.style.marginTop = "20px";
+  surpriseBtn.style.background = "#ffb47c"; // peach color
+  surpriseBtn.style.color = "white";
+  surpriseBtn.style.border = "none";
+  surpriseBtn.style.padding = "12px 28px";
+  surpriseBtn.style.borderRadius = "25px";
+  surpriseBtn.style.cursor = "pointer";
+  card.appendChild(surpriseBtn);
+
+  surpriseBtn.addEventListener("click", ()=>{
+    // Floating message box
+    const box = document.createElement("div");
+    box.className="message-box";
+    document.body.appendChild(box);
+
+    // Text container
+const textContainer = document.createElement("div");
+textContainer.style.paddingBottom = "40px"; // leave space for close button
+textContainer.style.whiteSpace = "pre-wrap"; // preserve line breaks
+box.appendChild(textContainer);
+
+// Close button
+const closeBtn = document.createElement("button");
+closeBtn.textContent = "Close";
+closeBtn.addEventListener("click", ()=> box.remove());
+box.appendChild(closeBtn);
+
+// Typewriter
+typeWriter(
+  "Jeet, this might be your first Valentine’s Day…\nbut I really hope it’s the first of many we get to spend together..❤️ \n\nHAPPY VALENTINE'S DAY",
+      textContainer
+    );
+  });
+
+  const interval = setInterval(floatingHearts,300);
+  setTimeout(()=>clearInterval(interval),5000);
+});
+</script>
+
+</body>
+</html>
